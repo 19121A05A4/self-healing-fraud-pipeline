@@ -1,0 +1,43 @@
+{
+  "project": "Self-Healing Fraud Detection Pipeline",
+  "date": "2026-03-28",
+  "dataset": {
+    "name": "IEEE-CIS Fraud Detection",
+    "total_transactions": 590540,
+    "fraud_rate_pct": 3.5,
+    "features_used": 30
+  },
+  "fraud_classifier": {
+    "model": "XGBoost",
+    "precision": 0.21,
+    "recall": 0.78,
+    "f1_score": 0.33,
+    "accuracy": 0.89,
+    "note": "High recall prioritized \u2014 missing fraud is more costly than false positives"
+  },
+  "drift_detector": {
+    "model": "Isolation Forest",
+    "contamination": 0.01,
+    "n_estimators": 100,
+    "drift_detection_score_normal": 0.34,
+    "drift_detection_score_drifted": -0.18,
+    "anomalies_detected_on_drift": "100/100 records"
+  },
+  "pipeline_performance": {
+    "batch_size": 100,
+    "batches_processed_before_drift": 8,
+    "drift_detected": true,
+    "pipeline_halted_automatically": true,
+    "alert_triggered": true
+  },
+  "stack": [
+    "Apache Kafka",
+    "XGBoost",
+    "Isolation Forest",
+    "FastAPI",
+    "Apache Airflow",
+    "dbt",
+    "Snowflake",
+    "Docker"
+  ]
+}
