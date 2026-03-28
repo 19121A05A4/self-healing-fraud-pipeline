@@ -10,7 +10,7 @@ This project solves that problem with a **self-healing architecture**: a seconda
 
 ## Live Demo
 
-- **API Docs:** [FastAPI Swagger UI](http://98.93.17.187:8000/docs) ← update with your URL
+- **API Docs:** [FastAPI Swagger UI](http://40.65.88.4:8000/docs) ← update with your URL
 
 ---
 
