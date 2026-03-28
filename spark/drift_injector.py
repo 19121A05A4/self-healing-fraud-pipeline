@@ -16,14 +16,23 @@ for idx, row in df.iloc[:500].iterrows():
     time.sleep(0.05)
 
 print("INJECTING DRIFT NOW...")
-# Corrupt the data — simulate drift
+# Send ONLY corrupted records in rapid succession
 for idx, row in df.iloc[500:600].iterrows():
     corrupted = row.to_dict()
-    corrupted['TransactionAmt'] = corrupted['TransactionAmt'] * 1000  # extreme values
-    corrupted['C1'] = None  # nulls
-    corrupted['dist1'] = -999  # impossible values
+    corrupted['TransactionAmt'] = 999999999  # extreme value
+    corrupted['C1'] = 999999999
+    corrupted['C2'] = 999999999
+    corrupted['dist1'] = 999999999
+    corrupted['dist2'] = 999999999
     producer.send('raw-transactions', value=corrupted)
-    time.sleep(0.05)
+
+# Fill entire batch with corrupted data
+for i in range(400):  # send 400 more corrupted records
+    corrupted = df.iloc[0].to_dict()
+    corrupted['TransactionAmt'] = 999999999
+    corrupted['C1'] = 999999999
+    corrupted['dist1'] = 999999999
+    producer.send('raw-transactions', value=corrupted)
 
 print("Drift injection complete.")
 producer.flush()
