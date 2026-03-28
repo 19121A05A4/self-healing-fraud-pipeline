@@ -4,14 +4,13 @@
 
 ## Overview
 
-Most fraud detection systems have a critical blind spot: they assume incoming data is always clean. When data drift occurs (schema changes, corrupted features, distribution shifts), ML models silently degrade and continue making wrong predictions — undetected until fraud spikes.
+Most fraud detection systems have a critical blind spot: they assume incoming data is always clean. When data drift occurs (schema changes, corrupted features, distribution shifts), ML models silently degrade and continue making wrong predictions - undetected until fraud spikes.
 
 This project solves that problem with a **self-healing architecture**: a secondary ML model continuously monitors incoming data health before it reaches the fraud classifier. If drift is detected, the pipeline halts automatically and alerts the engineer.
 
 ## Live Demo
 
 - **API Docs:** [FastAPI Swagger UI](http://98.93.17.187:8000/docs) ← update with your URL
-- **GitHub:** https://github.com/19121A05A4/self-healing-fraud-pipeline
 
 ---
 
@@ -71,7 +70,7 @@ This project solves that problem with a **self-healing architecture**: a seconda
 | Metric | Value |
 |---|---|
 | Dataset | IEEE-CIS Fraud Detection (590K transactions) |
-| Fraud Classifier Recall | **0.78** — catches 78% of real fraud |
+| Fraud Classifier Recall | **0.78** - catches 78% of real fraud |
 | Drift Detection | **100/100** injected anomalies caught |
 | Pipeline Response | **Auto-halt** within one batch on drift |
 | Throughput | 100 transactions/batch, real-time |
@@ -183,12 +182,6 @@ Drift check: score=-0.1758, healthy=False
 [ALERT] Anomalies: 100/100 records
 Pipeline halted due to drift. Restart after investigating.
 ```
-
----
-
-## Defense Narrative
-
-> *"Existing fraud pipelines detect fraud. This system detects when the fraud detector itself is about to fail — and stops it before it does."*
 
 ---
 
