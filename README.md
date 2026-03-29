@@ -71,15 +71,15 @@ This project solves that problem with a **self-healing architecture**: a seconda
 |---|---|
 | Dataset | IEEE-CIS Fraud Detection (590K transactions) |
 | Features Used | **154** (transaction + identity + engineered) |
-| Fraud Classifier F1 | **0.59** |
-| Fraud Classifier Recall | **0.83** - catches 83% of real fraud |
+| Fraud Classifier F1 | **0.74** (optimized threshold 0.781) |
+| Fraud Classifier Precision | **0.79** |
+| Fraud Classifier Recall | **0.69** |
 | Fraud Classifier ROC-AUC | **0.9656** |
 | Drift Detection | **100/100** injected anomalies caught |
 | Pipeline Response | **Auto-halt** within one batch on drift |
 | Throughput | 100 transactions/batch, real-time |
 
-> High recall (0.83) is intentional - in fraud detection, missing real fraud is more costly than false positives.
-
+> Threshold optimized to 0.781 to maximize F1 score - balancing precision (0.79) and recall (0.69) for production use.
 ![Confusion Matrix](docs/confusion_matrix.png)
 ![ROC Curve](docs/roc_curve.png)
 
