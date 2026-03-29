@@ -10,7 +10,7 @@ This project solves that problem with a **self-healing architecture**: a seconda
 
 ## Live Demo
 
-- **API Docs:** [FastAPI Swagger UI](http://40.65.88.4:8000/docs) ← update with your URL
+- **API Docs:** [FastAPI Swagger UI](http://40.65.88.4:8000/docs)
 
 ---
 
@@ -70,12 +70,18 @@ This project solves that problem with a **self-healing architecture**: a seconda
 | Metric | Value |
 |---|---|
 | Dataset | IEEE-CIS Fraud Detection (590K transactions) |
-| Fraud Classifier Recall | **0.78** - catches 78% of real fraud |
+| Features Used | **154** (transaction + identity + engineered) |
+| Fraud Classifier F1 | **0.59** |
+| Fraud Classifier Recall | **0.83** - catches 83% of real fraud |
+| Fraud Classifier ROC-AUC | **0.9656** |
 | Drift Detection | **100/100** injected anomalies caught |
 | Pipeline Response | **Auto-halt** within one batch on drift |
 | Throughput | 100 transactions/batch, real-time |
 
-> High recall (0.78) is intentional — in fraud detection, missing real fraud is more costly than false positives.
+> High recall (0.83) is intentional - in fraud detection, missing real fraud is more costly than false positives.
+
+![Confusion Matrix](docs/confusion_matrix.png)
+![ROC Curve](docs/roc_curve.png)
 
 ---
 
@@ -90,6 +96,7 @@ This project solves that problem with a **self-healing architecture**: a seconda
 | Orchestration | Apache Airflow |
 | Transformation | dbt (staging → marts) |
 | Warehouse | Snowflake |
+| Cloud Deployment | Azure VM (B2ats_v2) |
 | Infrastructure | Docker + Docker Compose |
 
 ---
@@ -118,9 +125,10 @@ self-healing-fraud-pipeline/
 │   ├── drift_detector/     # Isolation Forest
 │   │   ├── train.py
 │   │   └── predict.py
-│   └── fraud_classifier/   # XGBoost
-│       ├── train.py
-│       └── predict.py
+│   ├── fraud_classifier/   # XGBoost
+│   │   ├── train.py
+│   │   ├── train_v2.py
+│   │   └── predict.py
 │   └── serving/            # FastAPI model server
 │       └── api.py
 ├── pipeline/               # End-to-end runner
@@ -128,7 +136,7 @@ self-healing-fraud-pipeline/
 ├── airflow/dags/           # Airflow DAG
 ├── dbt/models/             # Staging, intermediate, marts
 ├── alerts/                 # Email alert system
-└── docs/                   # Architecture + metrics
+└── docs/                   # Architecture, metrics, charts
 ```
 
 ---
@@ -150,8 +158,8 @@ cd self-healing-fraud-pipeline
 # https://www.kaggle.com/c/ieee-fraud-detection/data
 
 # 3. Start infrastructure
-docker-compose up -d                              # Kafka
-docker-compose -f docker-compose-airflow.yaml up -d  # Airflow
+docker-compose up -d
+docker-compose -f docker-compose-airflow.yaml up -d
 
 # 4. Setup Python environment
 python -m venv venv && venv\Scripts\activate
@@ -159,7 +167,7 @@ pip install -r requirements.txt
 
 # 5. Train models
 python models/drift_detector/train.py
-python models/fraud_classifier/train.py
+python models/fraud_classifier/train_v2.py
 
 # 6. Run the pipeline
 python pipeline/run_pipeline.py
@@ -189,5 +197,4 @@ Pipeline halted due to drift. Restart after investigating.
 
 - Auto-retraining on drift detection
 - SHAP explainability layer for fraud predictions
-- Cloud-native deployment on AWS EKS
-- Prometheus + Grafana monitoring dashboard
+- Prometheus + Grafana metrics
