@@ -214,3 +214,6 @@ data/
 "airflow/airflow.cfg" 
 "airflow/logs/" 
 "config/" 
+"airflow/airflow.cfg" 
+"config/" 
+"*.pem" 
