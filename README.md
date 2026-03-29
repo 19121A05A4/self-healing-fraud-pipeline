@@ -193,8 +193,18 @@ Pipeline halted due to drift. Restart after investigating.
 
 ---
 
+## Limitations
+
+- Drift detection monitors feature distribution changes (covariate shift) — does not detect concept drift or automatically retrain the model on new data
+- Model retraining on drift is manual — engineer must intervene after pipeline halts
+
 ## Future Work
 
-- Auto-retraining on drift detection
+- Automated model retraining triggered on drift detection
+- Concept drift monitoring using prediction confidence scores
 - SHAP explainability layer for fraud predictions
-- Prometheus + Grafana metrics
+- Prometheus + Grafana metrics dashboard
+- Kaggle IEEE-CIS leaderboard submission
+```
+
+---
