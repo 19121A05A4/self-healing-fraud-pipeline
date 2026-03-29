@@ -7,9 +7,9 @@ import numpy as np
 app = FastAPI(title="Fraud Detection API")
 
 # Load models
-drift_model = joblib.load('models/drift_detector/model.pkl')
-drift_scaler = joblib.load('models/drift_detector/scaler.pkl')
-fraud_model = joblib.load('models/fraud_classifier/model.pkl')
+drift_model = joblib.load('model.pkl')
+drift_scaler = joblib.load('scaler.pkl')
+fraud_model = joblib.load('fraud_model.pkl')
 
 DRIFT_FEATURES = ['TransactionAmt', 'dist1', 'dist2', 'C1', 'C2']
 FRAUD_FEATURES = [
@@ -72,8 +72,8 @@ def predict_fraud(payload: Transaction):
             df[col] = 0
     
     df = df[FRAUD_FEATURES].fillna(0)
-    predictions = fraud_model.predict(df)
     probabilities = fraud_model.predict_proba(df)[:, 1]
+    predictions = (probabilities >= 0.7813).astype(int)
 
     return {
         "predictions": predictions.tolist(),
@@ -86,7 +86,7 @@ def predict_fraud(payload: Transaction):
 def score(payload: Transaction):
     # First check drift
     drift_result = detect_drift(payload)
-    
+
     if not drift_result["healthy"]:
         return {
             "status": "HALTED",

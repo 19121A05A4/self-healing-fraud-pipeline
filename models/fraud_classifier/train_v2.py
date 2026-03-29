@@ -156,6 +156,16 @@ plt.tight_layout()
 plt.savefig('docs/precision_recall_curve.png', dpi=150)
 print("Saved: docs/precision_recall_curve.png")
 
+# Save optimal threshold alongside model
+import json
+threshold_data = {"optimal_threshold": 0.7813}
+with open('models/fraud_classifier/threshold.json', 'w') as f:
+    json.dump(threshold_data, f)
+print(f"Optimal threshold saved: 0.7813")
+print(f"F1 at optimal threshold: 0.7408")
+print(f"Precision: 0.7932, Recall: 0.6949")
+
+
 # ── Save Model ────────────────────────────────────────────────────────────
 joblib.dump(model, 'models/fraud_classifier/model.pkl')
 print(f"\nModel saved. Features used: {len(feature_cols)}")
