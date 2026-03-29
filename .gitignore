@@ -211,9 +211,9 @@ data/
 *.pkl
 *.csv
 *.log
-"airflow/airflow.cfg" 
-"airflow/logs/" 
-"config/" 
-"airflow/airflow.cfg" 
-"config/" 
-"*.pem" 
+
+airflow/airflow.cfg
+airflow/logs/
+config/
+*.pem
+logs/
