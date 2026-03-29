@@ -195,8 +195,8 @@ Pipeline halted due to drift. Restart after investigating.
 
 ## Limitations
 
-- Drift detection monitors feature distribution changes (covariate shift) — does not detect concept drift or automatically retrain the model on new data
-- Model retraining on drift is manual — engineer must intervene after pipeline halts
+- Drift detection monitors feature distribution changes (covariate shift) - does not detect concept drift or automatically retrain the model on new data
+- Model retraining on drift is manual - engineer must intervene after pipeline halts
 
 ## Future Work
 
